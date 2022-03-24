@@ -6,7 +6,7 @@
     <head>        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
+        <title>Home Page</title>
         <meta name="description" content="One of many pages">
         <meta name="keyword" content="Just a page">
         <link rel="stylesheet" href="{{ url_for('static', filename='homeStyle.css') }}">
@@ -23,7 +23,7 @@
         </p>
 
         <div class="navbar">
-            <div class="nav-container">
+            <div class="container">
                 <nav>
                     <ul class="primary-nav">   
                         <li class="current"><a href="#">Home</a></li>
@@ -32,7 +32,6 @@
                         <li><a href="{{ url_for('static', filename='base.html') }}">Export</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">Admin</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">About</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">How To Access</a></li>
                     </ul>
                     <ul class="secondary-nav">   
                         <li><a href="{{ url_for('static', filename='base.html') }}">How To Access</a></li>
@@ -47,10 +46,10 @@
                     <h3 class="upper-log-head">Please Enter First and Last Name to View/Configure Data:</h3>
                     <form action="{{ url_for('static', filename='base.html') }}">
                         <label hidden for="full-name">Name</label>
-                        <input type="text" id="full-name" name="full-name">
+                        <input class="name-input" type="text" id="full-name" name="full-name">
                     </form>
                 </div>
-                <p><h3 class="Or"></h3></p>          
+                <p><h3 class="Or">Or</h3></p>          
                 <div class="lower-log">
                     <h3 class="lower-log-head">Login With UNCC Google Account</h3>
                     <a href="{{ url_for('static', filename='base.html') }}">
