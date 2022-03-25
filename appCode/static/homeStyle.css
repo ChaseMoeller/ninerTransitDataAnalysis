@@ -1,0 +1,88 @@
+/*Author: Jonathan Martinez
+  Co-author: Chase Moeller*/
+/*body and header style*/
+body {
+  position: relative;
+  margin: 0;
+  background-image: url(UNCCCampusMap.png);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  padding: 10px;
+  background: #005640;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  margin: 0;
+  background: #a49665;
+  border-top: 3px solid #a49665;
+  border-bottom: 3px solid #a49665;
+}
+
+/*nav bar style*/
+.navbar {
+  overflow: hidden;
+  background-color: #0c7544;
+  font-size: 1.2em;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.navbar ul li a:hover:not(.current) {
+  background-color: #a49665;
+  color: black;
+}
+
+.navbar ul.primary-nav li {
+  float: left;
+}
+
+.navbar li.current a {
+  background-color: #a49665;
+  color: black;
+  font-weight: bold;
+}
+
+.navbar ul.secondary-nav li {
+  float: right;
+}
+
+/*login section style*/
+section {
+  padding: 30px;
+}
+
+.login-section {
+  text-align: center;
+}
+
+.login-section .Or {
+  padding: 10px;
+  margin: 10px;
+}
+
+.login-section .login-google-button {
+  background-color: #47525E;
+  border-radius: 8px;
+  color: white;
+  padding: 8px;
+}
+/*# sourceMappingURL=homeStyle.css.map */
