@@ -9,7 +9,11 @@ app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
-def index():
+def home():
     return render_template("home.html")
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
