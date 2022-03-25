@@ -2,6 +2,7 @@
   Co-author: Chase Moeller*/
 /*body and header style*/
 body {
+  position: relative;
   margin: 0;
   background-image: url(UNCCCampusMap.png);
   font-family: Arial, Helvetica, sans-serif;

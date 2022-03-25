@@ -3,6 +3,7 @@
 
 /*body and header style*/
 body {
+    position: relative;
     margin: 0;
     background-image: url(UNCCCampusMap.png);
     font-family: Arial, Helvetica, sans-serif;
@@ -11,7 +12,6 @@ body {
 .header {
     padding: 10px;
     background: #005640;
-
 }
 
 p {
@@ -74,9 +74,6 @@ section {
 
 .login-section {
     text-align: center;
-    .name-input{
-        
-    }
     .Or{
         padding: 10px;
         margin: 10px;
