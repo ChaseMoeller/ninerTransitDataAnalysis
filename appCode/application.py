@@ -16,21 +16,21 @@ app.secret_key = "not secret"
 @app.route('/home')
 def home():
     if not session.get('LoggedIn'):
-        return render_template("home.html", loggedIn = False, name = session['Name'])
+        return render_template("home.html", loggedIn = False)
     else:
         return render_template("home.html", loggedIn = True, name = session['Name'])
 
 @app.route('/about')
 def about():
     if not session.get('LoggedIn'):
-        return render_template("about.html", loggedIn = False, name = session['Name'])
+        return render_template("about.html", loggedIn = False)
     else:
         return render_template("about.html", loggedIn = True, name = session['Name'])
 
 @app.route('/login', methods=['GET'])
 def login():
     if not session.get('LoggedIn'):
-        return render_template("login.html", loggedIn = False, name = session['Name'])
+        return render_template("login.html", loggedIn = False)
     else:
         return render_template("login.html", loggedIn = True, name = session['Name'])
 
@@ -45,12 +45,12 @@ def authorize():
         return render_template("login.html", loggedIn = True, name = session['Name'])
     else:
         flash("Invalid credentials, try again")
-        return render_template("login.html", loggedIn = False, name = session['Name'])
+        return render_template("login.html", loggedIn = False)
 
 @app.route('/signup', methods=['GET'])
 def serve_signup():
     if not session.get('LoggedIn'):
-        return render_template("signup.html", loggedIn = False, name = session['Name'])
+        return render_template("signup.html", loggedIn = False)
     else:
         return render_template("signup.html", loggedIn = True, name = session['Name'])
 
