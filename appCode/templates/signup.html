@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Login Page</title>
+{% endblock %}
+{% block loginstatus %}
+    {% if loggedIn == True: %}
+        <li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{name}} </li></li>
+    {% else %}
+        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+        <section class="login-section">
+            <div class="container">
+                <div class="upper-log">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if loggedIn: %}
+                                    <h3 class="flash-success"> 
+                                    {{ message }}
+                                    </h3>
+                                {% else: %}
+                                    <h3 class="flash-error"> 
+                                    {{ message }}
+                                    </h3>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <h3 class="upper-log-head">SIGN UP</h3>
+                    <form action="{{ url_for('signup') }}" method="POST">
+                        <label for="first-name">First Name</label>
+                        <input class="name-input" type="text" id="first-name" name="first-name">
+                        <br>
+                        <label for="last-name">Last Name</label>
+                        <input class="name-input" type="text" id="last-name" name="last-name">
+                        <br>
+                            <button>Sign Up</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </section>
+ {% endblock %}
