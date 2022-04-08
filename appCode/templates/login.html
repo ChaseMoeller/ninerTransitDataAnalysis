@@ -11,43 +11,33 @@
 {% endblock %}
 {% block content %}
 
-    <div class="flash">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                {% if loggedIn: %}
-                    <h3 class="flash-success"> 
-                    {{ message }}
-                    </h3>
-                {% else: %}
-                    <h3 class="flash-error"> 
-                    {{ message }}
-                    </h3>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    </div>
         <section class="login-section">
             <div class="container">
-                <div class="upper-log">
-                    <h3 class="upper-log-head">Please enter first and last name to View/Configure Data:</h3>
-                    <form action="{{ url_for('login') }}" method="POST">
-                        <label for="first-name">First Name</label>
-                        <input class="name-input" type="text" id="first-name" name="first-name">
-                        <br>
-                        <label for="last-name">Last Name</label>
-                        <input class="name-input" type="text" id="last-name" name="last-name">
-                        <br>
-                            <button>Login</button>
+                <div class="formwrapper">
+                    <h2 class="title">Login</h2>
+                    <form method="POST" action="/login">
+                        <div class="form-field">
+                            {{ form.email.label }} {{ form.email }}
+                            {% if form.email.errors %}
+                            <ul class="errors">
+                                {% for error in form.email.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="form-field">
+                            {{ form.password.label }} {{ form.password }}
+                            {% if form.password.errors %}
+                            <ul class="errors">
+                                {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        {{ form.submit }}
                     </form>
-                </div>
-                <p><h3 class="Or">Or</h3></p>          
-                <div class="lower-log">
-                    <h3 class="lower-log-head">Login With UNCC Google Account</h3>
-                    <a href="{{ url_for('static', filename='base.html') }}">
-                        <button class="login-google-button" type="button">Login With Google</button>
-                    </a>
                 </div>
             </div>
         </section>

@@ -1,31 +1,15 @@
-
 {% extends 'base.html' %}
 {% block title %}
 <title>Home Page</title>
 {% endblock %}
 {% block loginstatus %}
-    {% if loggedIn == True: %}
-    <li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{name}} </li></li>
+    {% if user %}
+<li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{name}} </li></li>
     {% else %}
-        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+<li><a href="{{ url_for('login') }}">Login</a></li>
+<li><a href="{{ url_for('signup') }}">Sign up</a></li>
     {% endif %}
 {% endblock %}
 {% block content %}
-<section class="login-section">
-    <div class="container">
-        <div class="upper-log">
-            <h3 class="upper-log-head">Please login to view/configure</h3>
-            <a href="{{ url_for('login') }}">
-                <button class="login-submit">Login</button>
-            </a>
-        </div>
-        <p><h3 class="Or">Or</h3></p>          
-        <div class="lower-log">
-            <h3 class="lower-log-head">Login With UNCC Google Account</h3>
-            <a href="{{ url_for('static', filename='base.html') }}">
-                <button class="login-google-button" type="button">Login With Google</button>
-            </a>
-        </div>
-    </div>
-</section>
+
 {% endblock %}
