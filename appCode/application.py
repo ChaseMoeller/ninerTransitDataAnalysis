@@ -14,6 +14,7 @@ from models import User as User
 from forms import RegisterForm
 from forms import LoginForm
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///post.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -28,14 +29,28 @@ with app.app_context():
 def home():
     if session.get('user'):
         return render_template("home.html", user=session['user'])
+
     return render_template("home.html")
+
+
+
+@app.route('/visualize', methods=['GET','POST'])
+def visualize():
+    if request.method == 'POST':
+        #Holds Choice for Bus Route
+        option = request.form.get('options')
+        return render_template('visualize.html', item=option)
+    elif session.get('user'):
+        return render_template("visualize.html", user=session['user'])
+
+    return render_template("visualize.html")
 
 @app.route('/about')
 def about():
-    if not session.get('LoggedIn'):
+    if not session.get('user'):
         return render_template("about.html", loggedIn = False)
     else:
-        return render_template("about.html", loggedIn = True, name = session['Name'])
+        return render_template("about.html", loggedIn = True, user=session['user'])
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -76,3 +91,5 @@ def logout():
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
 #new stuff
+
+
