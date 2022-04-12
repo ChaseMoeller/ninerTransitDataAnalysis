@@ -45,12 +45,21 @@ def visualize():
 
     return render_template("visualize.html")
 
+
+@app.route('/visualize/<string:graph>')
+def visualize_with_variables(graph: str):
+   
+    if not session.get('user'):
+        return render_template("visualize.html", graph=graph)
+    else:
+        return render_template("visualize.html", graph=graph, user=session['user'])
+
 @app.route('/about')
 def about():
     if not session.get('user'):
-        return render_template("about.html", loggedIn = False)
+        return render_template("about.html")
     else:
-        return render_template("about.html", loggedIn = True, user=session['user'])
+        return render_template("about.html", user=session['user'])
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
