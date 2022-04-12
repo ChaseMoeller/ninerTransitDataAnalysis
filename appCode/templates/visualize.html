@@ -1,55 +1,20 @@
-<!DOCTYPE html>
-<!--Author: Jonathan Martinez -->
-<!--Contributors: Chase Moeller, Cameron Pacileo-->
-<html lang="en">
-    <head>        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% block title %}{% endblock %}
-        <meta name="description" content="One of many pages">
-        <meta name="keyword" content="Just a page">
-        <link rel="stylesheet" href="{{ url_for('static', filename='DefaultStyle.css') }}">
-    </head>
-        
-    <body>
 
-        <div class="header">
-            <a href="/"><img src="static/logo.png" height="100" width="300" class="left" alt=""/></a>
-        </div>
+{% extends 'base.html' %}
+{% block title %}
+<title>Visualize Page</title>
+{% endblock %}
+{% block content %}
 
-        <p>
-            <hr>
-        </p>
+<div>
+    <h2>Sort By Route:</h2>
+    
+    <form method="POST" action="/visualize">
+        <input type="radio" name="options" id="gold" value="gold"> Gold </input><br>
+        <input type="radio" name="options" id="green" value="green"> Green </input><br>
+        <input type="radio" name="options" id="silver" value="silver"> Silver </input><br>
+        <input type="submit" type="button" value="Visualize" name="Visualize"/>
+    </form>
+   <p>{{ item }}</p>
+</div>
 
-        <div class="navbar">
-            <div class="container">
-                <nav>
-                    <ul class="primary-nav">   
-                        <li class="current"><a href="#">Home</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Upload</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Visualize</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Export</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Admin</a></li>
-                        <li><a href="{{ url_for('about') }}"> About</a></li>
-                    </ul>
-                    <ul class="secondary-nav">   
-                        {% block loginstatus %}{% endblock %}
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        {% block content %}{% endblock %}
-        <div>
-            <h2>Sort By Route:</h2>
-            
-
-            <form method="POST" action="/visualize">
-                <input type="radio" name="options" id="gold" value="gold"> Gold </input><br>
-                <input type="radio" name="options" id="green" value="green"> Green </input><br>
-                <input type="radio" name="options" id="silver" value="silver"> Silver </input><br>
-                <input type="submit" type="button" value="Visualize" name="Visualize"/>
-            </form>
-           <p>{{ item }}</p>
-        </div>
-    </body>
-</html>
+ {% endblock %}

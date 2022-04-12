@@ -29,6 +29,7 @@ with app.app_context():
 def home():
     if session.get('user'):
         return render_template("home.html", user=session['user'])
+
     return render_template("home.html")
 
 
@@ -41,14 +42,15 @@ def visualize():
         return render_template('visualize.html', item=option)
     elif session.get('user'):
         return render_template("visualize.html", user=session['user'])
+
     return render_template("visualize.html")
 
 @app.route('/about')
 def about():
-    if not session.get('LoggedIn'):
+    if not session.get('user'):
         return render_template("about.html", loggedIn = False)
     else:
-        return render_template("about.html", loggedIn = True, name = session['Name'])
+        return render_template("about.html", loggedIn = True, user=session['user'])
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():

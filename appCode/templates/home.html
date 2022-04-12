@@ -2,14 +2,7 @@
 {% block title %}
 <title>Home Page</title>
 {% endblock %}
-{% block loginstatus %}
-    {% if user %}
-<li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{name}} </li></li>
-    {% else %}
-<li><a href="{{ url_for('login') }}">Login</a></li>
-<li><a href="{{ url_for('signup') }}">Sign up</a></li>
-    {% endif %}
-{% endblock %}
+
 {% block content %}
 
 {% endblock %}

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--Author: Jonathan Martinez -->
-<!--Contributors: Chase Moeller, Cameron Pacileo-->
+<!--Contributors: Chase Moeller, Cameron Pacileo, Jared Beightol-->
 <html lang="en">
     <head>        
         <meta charset="UTF-8">
@@ -33,7 +33,12 @@
                         <li><a href="{{ url_for('about') }}"> About</a></li>
                     </ul>
                     <ul class="secondary-nav">   
-                        {% block loginstatus %}{% endblock %}
+                        {% if user %}
+                                <li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{user}} </li></li>
+                            {% else %}
+                                <li><a href="{{ url_for('login') }}">Login</a></li>
+                                <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+                            {% endif %}
                     </ul>
                 </nav>
             </div>
