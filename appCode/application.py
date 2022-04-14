@@ -89,7 +89,7 @@ def logout():
         session.clear()
     return redirect(url_for('home'))
 
-app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
+app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=False)
 #new stuff
 
 
