@@ -1,6 +1,8 @@
 ﻿import scripts.users
 import os
 import bcrypt
+import pandas as pd
+from werkzeug.utils import secure_filename
 
 from flask import Flask
 from flask import render_template
@@ -73,6 +75,21 @@ def logout():
     if session.get('user'):
         session.clear()
     return redirect(url_for('home'))
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if not session.get('LoggedIn'):
+        return render_template("upload.html", loggedIn = False)
+    else:
+        return render_template("upload.html", loggedIn = True, name = session['Name'])
+
+@app.route('/uploader', methods=['GET', 'POST'])
+def uploader():
+    if request.method == 'POST':
+        file = request.files['file']
+        file.save(secure_filename(file.filename))
+        data = pd.read_excel(file)
+        return render_template('data.html', data=data.to_html())
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
 #new stuff

@@ -24,13 +24,14 @@
         <div class="navbar">
             <div class="container">
                 <nav>
-                    <ul class="primary-nav">   
+                    <ul class="primary-nav">
                         <li class="current"><a href="#">Home</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">Upload</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">Visualize</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">Export</a></li>
                         <li><a href="{{ url_for('static', filename='base.html') }}">Admin</a></li>
                         <li><a href="{{ url_for('about') }}"> About</a></li>
+                        <li><a href="{{ url_for('upload') }}"> Upload</a></li>
                     </ul>
                     <ul class="secondary-nav">   
                         {% block loginstatus %}{% endblock %}
