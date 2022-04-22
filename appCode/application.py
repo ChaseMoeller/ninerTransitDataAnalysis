@@ -103,10 +103,10 @@ def logout():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    if not session.get('LoggedIn'):
-        return render_template("upload.html", loggedIn = False)
+    if not session.get('user'):
+        return render_template("upload.html")
     else:
-        return render_template("upload.html", loggedIn = True, name = session['Name'])
+        return render_template("upload.html", user = session['user'])
 
 @app.route('/uploader', methods=['GET', 'POST'])
 def uploader():
