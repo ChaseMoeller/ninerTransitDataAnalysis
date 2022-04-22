@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>About Page</title>
+{% endblock %}
+{% block loginstatus %}
+    {% if loggedIn == True: %}
+<li><a href="{{ url_for('logout') }}">Logout</a><li class="username"> User: {{name}} </li></li>
+    {% else %}
+<li><a href="{{ url_for('signup') }}">Sign up</a></li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+<section class="login-section">
+    <div class="container">
+        <div class="formwrapper">
+            <h2 class="title">Upload</h2>
+            <form action="uploader" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" name="" value="Submit">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
