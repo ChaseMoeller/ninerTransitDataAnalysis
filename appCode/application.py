@@ -2,8 +2,8 @@
 import os
 import bcrypt
 import pandas as pd
-from werkzeug.utils import secure_filename
 
+from werkzeug.utils import secure_filename
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -16,15 +16,22 @@ from models import User as User
 from forms import RegisterForm
 from forms import LoginForm
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///post.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "not secret"
 
 db.init_app(app)
+
 with app.app_context():
+    
+    #setup dash
+    from scripts.dashboard import create_dashboard
+    app = create_dashboard(app)
+
+    #setup db
     db.create_all()
+
 
 @app.route('/')
 @app.route('/home')
@@ -50,11 +57,12 @@ def visualize():
 
 @app.route('/visualize/<string:graph>')
 def visualize_with_variables(graph: str):
-   
+
     if not session.get('user'):
         return render_template("visualize.html", graph=graph)
     else:
         return render_template("visualize.html", graph=graph, user=session['user'])
+
 
 @app.route('/about')
 def about():

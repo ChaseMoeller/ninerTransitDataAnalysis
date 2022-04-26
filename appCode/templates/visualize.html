@@ -6,20 +6,26 @@
 {% block content %}
 
 <div id="visualize-background">
-    
-    <form method="POST" action="/visualize">
+    <div id="dash-container">
+            <iframe id="dash-graph" src="/dashapp/"></iframe>
+    </div>
+    <div id="graph-options-container">
+        <div id="graph-options">
+        <form method="POST" action="/visualize">
 
-         <!--Routes-->
-        <div id="sort-by-route">
+            <!--Routes-->
+            <div id="sort-by-route">
             
-            <h2>Sort By Route:</h2>
-            <input type="radio" name="options" id="gold" value="gold"> Gold </input><br>
-            <input type="radio" name="options" id="green" value="green"> Green </input><br>
-            <input type="radio" name="options" id="silver" value="silver"> Silver </input><br>
-            <input type="submit" type="button" value="Visualize" name="Visualize"/>
+                <h2>Sort By Route:</h2>
+                <input type="radio" name="options" id="gold" value="gold"> Gold </input><br>
+                <input type="radio" name="options" id="green" value="green"> Green </input><br>
+                <input type="radio" name="options" id="silver" value="silver"> Silver </input><br>
+                <input type="submit" type="button" value="Visualize" name="Visualize"/>
     
 
-        </div>
+            </div>
+        </form>
+  
         <!--Dropdown Menus-->
         <div class="dropdown">
             <button class="dd-button">Graph Type</button>
@@ -49,9 +55,8 @@
                 <a href="{{ url_for('visualize') }}/stopName">Stop Name</a>
             </div>
         </div>
-
-    </form>
-   <p> Return Values: {{ item }} {{graph}}</p>
+    </div>
+    </div>
+  <!-- <p> Return Values: {{ item }} {{graph}}</p>-->
 </div>
-
  {% endblock %}
