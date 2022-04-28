@@ -6,34 +6,75 @@ import dash_table
 import dash_html_components as html
 import dash_core_components as dcc
 
+from dash import Dash, dcc, html, Input, Output
+
+
 def create_dashboard(server):
     dash_app = dash.Dash(
         server=server,
         routes_pathname_prefix='/dashapp/',
     )
 
-    df = pd.DataFrame({
-        "Fruit": ["Apples", "Oranges", "Bananas"],
-        "Amount": [4,1,2],
-        "City":["SF", "NY", "LA"]
-    })
+    df = pd.read_excel('appCode/niner-transit-data/Untitled spreadsheet-2.xlsx')
+    
 
-    fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+
+    fig = px.line_geo(df, lat="Latitude", lon="Longitude")
 
     dash_app.layout = html.Div(children=[
 
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
+    html.Div([
+        dcc.Dropdown(
+            ['bar', 'line'],
+            id='graph-type'
+        ),
+        dcc.Dropdown(
+            df['Latitude'].unique(),
+            id='x-axis-dd'
+        ),
+        dcc.Dropdown(
+            df['Longitude'].unique(),
+            id='y-axis-dd'
+        )
+    ]),
+    html.Div([
+        dcc.RadioItems(
+            ['Silver', 'Gold', 'Green'],
+            'Silver',
+            id='routes'
+        )
+    ]),
+    html.Div([
+        dcc.Graph(
+            id='graph-1',
+            figure=fig
+        )
+    ])
 ])
     
+    @dash_app.callback(
+        Output(component_id='graph-1', component_property='figure'),
+        Input(component_id='graph-type', component_property='value'),
+        Input(component_id='routes', component_property='value'),
+        
+    )
+    def update_graph(graph, routes):
+
+        if(routes == 'Silver'):
+            #sort the routes to only get silver
+            dff = df[df['Routes'] == routes]
+        elif(routes == 'Gold'):
+            #sort the routes
+            routes
+        elif(routes == 'Green'):
+            #sort the routes
+            routes
+
+        if(graph == 'bar'):
+            fig = px.bar(df, x="Latitude", y="Longitude")
+        elif(graph == 'line'):
+            fig = px.line_geo(df, lat="Latitude", lon="Longitude")
+        return fig
+
     return dash_app.server
 
-
-#def init_callbacks(dash_app):
-
-    #@app.callback(
-
-    #)
-    #def update_graph(rows):

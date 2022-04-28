@@ -58,6 +58,8 @@ def visualize():
 @app.route('/visualize/<string:graph>')
 def visualize_with_variables(graph: str):
 
+
+
     if not session.get('user'):
         return render_template("visualize.html", graph=graph)
     else:
