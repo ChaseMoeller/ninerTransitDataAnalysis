@@ -15,33 +15,44 @@ def create_dashboard(server):
         routes_pathname_prefix='/dashapp/',
     )
 
+    #upload file
     df = pd.read_excel('appCode/niner-transit-data/Untitled spreadsheet-2.xlsx')
     
 
-
+    #default graph
     fig = px.line_geo(df, lat="Latitude", lon="Longitude")
+    #options
+    options = []
 
+    for col in df.columns:
+        options.append({'label':'{}'.format(col, col),
+        'value':col})
+
+    #html layout
     dash_app.layout = html.Div(children=[
 
-    html.Div([
-        dcc.Dropdown(
-            ['bar', 'line'],
-            id='graph-type'
-        ),
-        dcc.Dropdown(
-            df['Latitude'].unique(),
-            id='x-axis-dd'
-        ),
-        dcc.Dropdown(
-            df['Longitude'].unique(),
-            id='y-axis-dd'
-        )
-    ]),
     html.Div([
         dcc.RadioItems(
             ['Silver', 'Gold', 'Green'],
             'Silver',
             id='routes'
+        )
+    ]),
+    html.Div([
+        dcc.Dropdown(
+            ['Map', 'Bar', 'Line', 'Pie'],
+            id='graph-type',
+            placeholder='Choose Graph Type'
+        ),
+        dcc.Dropdown(
+            id='x-axis-dd',
+            options=options,
+            placeholder='Choose X Variable'
+        ),
+        dcc.Dropdown(
+            id='y-axis-dd',
+            options=options,
+            placeholder='Choose Y Variable'
         )
     ]),
     html.Div([
@@ -56,24 +67,23 @@ def create_dashboard(server):
         Output(component_id='graph-1', component_property='figure'),
         Input(component_id='graph-type', component_property='value'),
         Input(component_id='routes', component_property='value'),
-        
+        Input(component_id='x-axis-dd', component_property='value'),
+        Input(component_id='y-axis-dd', component_property='value')
     )
-    def update_graph(graph, routes):
+    #The parameters below correspond to the Input's above respectively
+    def update_graph(graph, routes, xaxis, yaxis):
 
-        if(routes == 'Silver'):
-            #sort the routes to only get silver
-            dff = df[df['Routes'] == routes]
-        elif(routes == 'Gold'):
-            #sort the routes
-            routes
-        elif(routes == 'Green'):
-            #sort the routes
-            routes
+        dff = df[df['Route'] == routes]
 
-        if(graph == 'bar'):
-            fig = px.bar(df, x="Latitude", y="Longitude")
-        elif(graph == 'line'):
-            fig = px.line_geo(df, lat="Latitude", lon="Longitude")
+        print(graph)
+        if(graph == 'Bar'):
+            fig = px.bar(dff, x=xaxis, y=yaxis)
+        elif(graph == 'Line'):
+            fig = px.line(dff, x=xaxis, y=yaxis)
+        elif(graph == 'Map'):
+            fig = px.line_geo(dff, lat=xaxis, lon=yaxis)
+        elif(graph == 'Pie'):
+            fig = px.pie(values=[xaxis, yaxis], names=[xaxis, yaxis])
         return fig
 
     return dash_app.server

@@ -128,3 +128,5 @@ def uploader():
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
 
+#if name == 'main':
+    #application.run(debug=False, host='0.0.0.0')
