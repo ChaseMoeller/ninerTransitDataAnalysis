@@ -6,7 +6,7 @@ import dash_table
 import dash_html_components as html
 import dash_core_components as dcc
 
-from dash import Dash, dcc, html, Input, Output
+from dash import dcc, html, Input, Output
 
 
 def create_dashboard(server):
@@ -25,8 +25,10 @@ def create_dashboard(server):
     options = []
 
     for col in df.columns:
-        options.append({'label':'{}'.format(col, col),
-        'value':col})
+        if col != 'Route' and col != 'Stop':
+            options.append({'label':'{}'.format(col, col),
+            'value':col})
+        
 
     #html layout
     dash_app.layout = html.Div(children=[
@@ -75,7 +77,7 @@ def create_dashboard(server):
 
         dff = df[df['Route'] == routes]
 
-        print(graph)
+        
         if(graph == 'Bar'):
             fig = px.bar(dff, x=xaxis, y=yaxis)
         elif(graph == 'Line'):
