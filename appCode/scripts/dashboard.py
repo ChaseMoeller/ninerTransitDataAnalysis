@@ -2,11 +2,8 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import dash
-import dash_table
-import dash_html_components as html
-import dash_core_components as dcc
 
-from dash import dcc, html, Input, Output
+from dash import dcc, html, Input, Output, dash_table
 
 
 def create_dashboard(server):
@@ -29,7 +26,13 @@ def create_dashboard(server):
             options.append({'label':'{}'.format(col, col),
             'value':col})
         
+    npStop = df['Stop'].to_numpy()
+    stopNames = []
+    for stop in npStop:
+        if stop not in stopNames:
+            stopNames.append(stop)
 
+    print(stopNames)
     #html layout
     dash_app.layout = html.Div(children=[
 
