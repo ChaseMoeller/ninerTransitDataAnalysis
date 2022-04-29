@@ -1,3 +1,5 @@
+from lib2to3.pgen2 import driver
+from types import NoneType
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -16,33 +18,53 @@ def create_dashboard(server):
 
 
     #upload file
-    df = pd.read_excel('appCode/niner-transit-data/Untitled spreadsheet-2.xlsx')
+    df = pd.read_excel('appCode/niner-transit-data/Copy of Test Log #2.xlsx')
 
     #declare arrays
+    nanRoute = 'Route NaN' 
+    nanStop = 'Stop NaN'
+    nanBus = 'Bus NaN'
+    nanDriver = 'Driver NaN'
     sortOptions = []
     filterOptions = []
     stopNames = []
     busNumbers = []
+    driverIDs=[]
+    colNames = []
+
+    for col in df.columns:
+        colNames.append(col)
 
     #load arrays
-    for col in df.columns:
-        if col != 'Route' and col != 'Stop' and col != 'Bus':
+    for col in colNames:
+        if col != 'Route' and col != 'Stop' and col != 'Bus' and col != 'Driver ID':
             sortOptions.append({'label':'{}'.format(col, col),
             'value':col})
         else:
             filterOptions.append({'label':'{}'.format(col, col),
             'value':col})
 
-    npStop = df['Stop'].to_numpy()
-    npBus = df['Bus'].to_numpy()
-    
+    npStop = df['Stop']
+    npBus = df['Bus']
+    npDriver = df['Driver ID']
+    count = 0
     for stop in npStop:
-        if stop not in stopNames:
-            stopNames.append(stop)
+        if pd.notna(stop):
+            if stop not in stopNames:
+                stopNames.append(stop)
+    stopNames.append(nanStop)
+
+    for id in npDriver:
+        if pd.notna(id):
+            if id not in driverIDs:
+                driverIDs.append(id)
+    driverIDs.append(nanDriver)
 
     for bus in npBus:
-        if bus not in busNumbers:
-            busNumbers.append(bus)
+        if pd.notna(bus):
+            if bus not in busNumbers:
+                busNumbers.append(bus)
+    busNumbers.append(nanBus)
 
 
     #load default graph
@@ -59,7 +81,7 @@ def create_dashboard(server):
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
                 id='routes',
-                options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green']],
+                options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green', nanRoute]],
                 value= 'Silver'
             )
         ], style={'display':'block'}),
@@ -77,6 +99,14 @@ def create_dashboard(server):
                 id='buses',
                 options = busNumbers,
                 value= busNumbers[0]
+            )
+        ], style={'display':'block'}),
+
+        html.Div(id='driverSelections', children=[
+            dcc.RadioItems(
+                id='drivers',
+                options = driverIDs,
+                value= driverIDs[0]
             )
         ], style={'display':'block'}),
 
@@ -123,22 +153,66 @@ def create_dashboard(server):
         Input(component_id='routes', component_property='value'),
         Input(component_id='stops', component_property='value'),
         Input(component_id='buses', component_property='value'),
+        Input(component_id='drivers', component_property='value'),
         Input(component_id='x-axis-dd', component_property='value'),
         Input(component_id='y-axis-dd', component_property='value')
     )
     #The parameters below correspond to the Input's above respectively
-    def updateGraph(graph, filter, routes, stops, buses, xaxis, yaxis):
-
+    def updateGraph(graph, filter, route, stop, bus, driver, xaxis, yaxis):
+        dfNaN = pd.DataFrame()
+        col1 = 'Count'
+        col2 = 'Parameters'
+        dfNaN[col1] = ""
+        dfNaN[col2] = ""
+        temp = []
+        print(df)
         
         if(filter == 'Route'):
-            dff = df[df[filter] == routes]
+            if route != nanRoute:
+                dff = df[df[filter] == route]
+            else:
+                dff = df[df[filter].isna()]
+            if xaxis != None and yaxis != None:
+                temp = dff.isna().sum(axis=0).to_numpy()
+                dfNaN[col1] = temp.tolist()
+                dfNaN[col2] = colNames
+                print(dfNaN)
+
         elif(filter == 'Stop'):
-            dff = df[df[filter] == stops]
+            if stop != nanStop:
+                dff = df[df[filter] == stop]
+            else:
+                dff = df[df[filter].isna()]
+            if xaxis != None and yaxis != None:
+                temp = dff.isna().sum(axis=0).to_numpy()
+                dfNaN[col1] = temp.tolist()
+                dfNaN[col2] = colNames
+                print(dfNaN)
+
         elif(filter == 'Bus'):
-            dff = df[df[filter] == buses]
+            if bus != nanBus:
+                dff = df[df[filter] == bus]
+            else:
+                dff = df[df[filter].isna()]
+            if xaxis != None and yaxis != None:
+                temp = dff.isna().sum(axis=0).to_numpy()
+                dfNaN[col1] = temp.tolist()
+                dfNaN[col2] = colNames
+                print(dfNaN)
+
+        elif(filter == 'Driver ID'):
+            if driver != nanRoute:
+                dff = df[df[filter] == driver]
+            else:
+                dff = df[df[filter].isna()]
+            if xaxis != None and yaxis != None:
+                temp = dff.isna().sum(axis=0).to_numpy()
+                dfNaN[col1] = temp.tolist()
+                dfNaN[col2] = colNames
+                print(dfNaN)
 
         if(graph == 'Bar'):
-            fig = px.bar(dff, x=xaxis, y=yaxis)
+            fig = px.bar(dfNaN, x=col2, y=col1)
         elif(graph == 'Line'):
             fig = px.line(dff, x=xaxis, y=yaxis)
         elif(graph == 'Map'):
@@ -151,17 +225,19 @@ def create_dashboard(server):
         Output(component_id='routeSelections', component_property='style'),
         Output(component_id='stopSelections', component_property='style'),
         Output(component_id='busSelections', component_property='style'),
+        Output(component_id='driverSelections', component_property='style'),
         Input(component_id='filter-dd', component_property='value')
     )
     def updateFilterSelections(filter):
         if(filter=='Route'):
-            return {'display':'block'}, {'display':'none'}, {'display':'none'}
+            return {'display':'block'}, {'display':'none'}, {'display':'none'}, {'display':'none'}
         elif(filter=='Stop'):
-            return {'display':'none'}, {'display':'block'}, {'display':'none'}
+            return {'display':'none'}, {'display':'block'}, {'display':'none'}, {'display':'none'}
         elif(filter=='Bus'):
-            return {'display':'none'}, {'display':'none'}, {'display':'block'}
-
-        return {'display':'block'}, {'display':'none'}, {'display':'none'} #show route selection if anything fails
+            return {'display':'none'}, {'display':'none'}, {'display':'block'}, {'display':'none'}
+        elif(filter=='Driver ID'):
+            return {'display':'none'}, {'display':'none'}, {'display':'none'}, {'display':'block'}
+        return {'display':'block'}, {'display':'none'}, {'display':'none'}, {'display':'none'} #show route selection if anything fails
     
     return dash_app.server
 
