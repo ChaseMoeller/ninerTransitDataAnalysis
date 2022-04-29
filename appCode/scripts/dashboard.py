@@ -12,16 +12,13 @@ def create_dashboard(server):
         routes_pathname_prefix='/dashapp/',
     )
 
+
     #upload file
     df = pd.read_excel('appCode/niner-transit-data/Untitled spreadsheet-2.xlsx')
-    
-
-    #default graph
-    fig = px.line_geo(df, lat="Latitude", lon="Longitude")
-    #options
     sortOptions = []
     filterOptions = []
-
+    stopNames = []
+    busNumbers = []
 
     for col in df.columns:
         if col != 'Route' and col != 'Stop' and col != 'Bus':
@@ -31,11 +28,25 @@ def create_dashboard(server):
             filterOptions.append({'label':'{}'.format(col, col),
             'value':col})
 
+
     npStop = df['Stop'].to_numpy()
-    stopNames = []
+    npBus = df['Bus'].to_numpy()
+    
     for stop in npStop:
         if stop not in stopNames:
             stopNames.append(stop)
+
+    for bus in npBus:
+        if bus not in busNumbers:
+            busNumbers.append(bus)
+
+    opt = stopNames
+    #default graph
+    fig = px.line_geo(df, lat="Latitude", lon="Longitude")
+    #options
+
+
+
 
     print(stopNames)
     print(filterOptions)
@@ -46,17 +57,25 @@ def create_dashboard(server):
         dcc.RadioItems(
             id='routes',
             options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green']],
-            value='Silver'
+            value= 'Silver'
         ),
         dcc.RadioItems(
             id='stops',
-            options=stopNames
+            options = stopNames,
+            value= stopNames[0]
+        ),
+        dcc.RadioItems(
+            id='buses',
+            options = busNumbers,
+            value= busNumbers[0]
         )
+
     ]),
     html.Div([
         dcc.Dropdown(
-            ['Map', 'Bar', 'Line', 'Pie'],
             id='graph-type',
+            options = [{'label': i, 'value': i} for i in ['Map', 'Bar', 'Line', 'Pie']],
+            value='Map',
             placeholder='Choose Graph Type'
         ),
         dcc.Dropdown(
@@ -89,13 +108,19 @@ def create_dashboard(server):
         Input(component_id='filter-dd', component_property='value'),
         Input(component_id='routes', component_property='value'),
         Input(component_id='stops', component_property='value'),
+        Input(component_id='buses', component_property='value'),
         Input(component_id='x-axis-dd', component_property='value'),
         Input(component_id='y-axis-dd', component_property='value')
     )
     #The parameters below correspond to the Input's above respectively
-    def update_graph(graph, filter, route, xaxis, yaxis):
-        
-        dff = df[df[filter] == route]
+    def update_graph(graph, filter, routes, stops, buses, xaxis, yaxis):
+
+        if(filter == 'Route'):
+            dff = df[df[filter] == routes]
+        elif(filter == 'Stop'):
+            dff = df[df[filter] == stops]
+        elif(filter == 'Bus'):
+            dff = df[df[filter] == buses]
 
         if(graph == 'Bar'):
             fig = px.bar(dff, x=xaxis, y=yaxis)
