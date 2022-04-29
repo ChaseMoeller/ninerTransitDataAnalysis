@@ -16,7 +16,7 @@ from models import User as User
 from forms import RegisterForm
 from forms import LoginForm
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///post.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "not secret"
