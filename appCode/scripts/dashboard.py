@@ -19,13 +19,18 @@ def create_dashboard(server):
     #default graph
     fig = px.line_geo(df, lat="Latitude", lon="Longitude")
     #options
-    options = []
+    sortOptions = []
+    filterOptions = []
+
 
     for col in df.columns:
-        if col != 'Route' and col != 'Stop':
-            options.append({'label':'{}'.format(col, col),
+        if col != 'Route' and col != 'Stop' and col != 'Bus':
+            sortOptions.append({'label':'{}'.format(col, col),
             'value':col})
-        
+        else:
+            filterOptions.append({'label':'{}'.format(col, col),
+            'value':col})
+
     npStop = df['Stop'].to_numpy()
     stopNames = []
     for stop in npStop:
@@ -33,14 +38,19 @@ def create_dashboard(server):
             stopNames.append(stop)
 
     print(stopNames)
+    print(filterOptions)
     #html layout
     dash_app.layout = html.Div(children=[
 
     html.Div([
         dcc.RadioItems(
-            ['Silver', 'Gold', 'Green'],
-            'Silver',
-            id='routes'
+            id='routes',
+            options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green']],
+            value='Silver'
+        ),
+        dcc.RadioItems(
+            id='stops',
+            options=stopNames
         )
     ]),
     html.Div([
@@ -50,13 +60,18 @@ def create_dashboard(server):
             placeholder='Choose Graph Type'
         ),
         dcc.Dropdown(
+            id='filter-dd',
+            options=filterOptions,
+            placeholder='Choose Filter'
+        ),
+        dcc.Dropdown(
             id='x-axis-dd',
-            options=options,
+            options=sortOptions,
             placeholder='Choose X Variable'
         ),
         dcc.Dropdown(
             id='y-axis-dd',
-            options=options,
+            options=sortOptions,
             placeholder='Choose Y Variable'
         )
     ]),
@@ -71,16 +86,17 @@ def create_dashboard(server):
     @dash_app.callback(
         Output(component_id='graph-1', component_property='figure'),
         Input(component_id='graph-type', component_property='value'),
+        Input(component_id='filter-dd', component_property='value'),
         Input(component_id='routes', component_property='value'),
+        Input(component_id='stops', component_property='value'),
         Input(component_id='x-axis-dd', component_property='value'),
         Input(component_id='y-axis-dd', component_property='value')
     )
     #The parameters below correspond to the Input's above respectively
-    def update_graph(graph, routes, xaxis, yaxis):
-
-        dff = df[df['Route'] == routes]
-
+    def update_graph(graph, filter, route, xaxis, yaxis):
         
+        dff = df[df[filter] == route]
+
         if(graph == 'Bar'):
             fig = px.bar(dff, x=xaxis, y=yaxis)
         elif(graph == 'Line'):
