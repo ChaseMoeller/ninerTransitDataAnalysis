@@ -126,8 +126,7 @@ def uploader():
         data = pd.read_excel(file)
         return render_template('data.html', data=data.to_html())
 
-#app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=False)
 #app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
 
-#if name == 'main':
-    #application.run(debug=False, host='0.0.0.0')
+if __name__ == '__main__':
+    application.run(debug=False, host='0.0.0.0')
