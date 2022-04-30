@@ -16,7 +16,7 @@ from models import User as User
 from forms import RegisterForm
 from forms import LoginForm
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///post.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "not secret"
@@ -126,7 +126,7 @@ def uploader():
         data = pd.read_excel(file)
         return render_template('data.html', data=data.to_html())
 
-app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
+#app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=False)
 
-#if name == 'main':
-    #application.run(debug=False, host='0.0.0.0')
+if __name__ == '__main__':
+    application.run(debug=False, host='0.0.0.0')

@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\appCode"
   ],
-  "SelectedNode": "\\C:\\Users\\MrCao\\Source\\Repos\\ninerTransitDataAnalysis",
+  "SelectedNode": "\\appCode\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
