@@ -18,7 +18,7 @@ def create_dashboard(server):
 
 
     #upload file
-    df = pd.read_excel('appCode/niner-transit-data/Copy of Test Log #2.xlsx')
+    df = pd.read_excel('niner-transit-data/Copy of Test Log #2.xlsx')
 
     #declare arrays
     nanRoute = 'Route NaN' 
