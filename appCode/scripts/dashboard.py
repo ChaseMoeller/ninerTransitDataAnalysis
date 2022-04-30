@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import dash
+from datetime import date
 
 from dash import dcc, html, Input, Output, dash_table
 
@@ -31,6 +32,23 @@ def create_dashboard(server):
     busNumbers = []
     driverIDs=[]
     colNames = []
+    minTime = min(df['Time'])
+    #minTime = pd.to_datetime(minTime)
+    #minTime = minDate.strftime("%H/%m/%s")
+    maxTime = max(df['Time'])
+    #maxTime = pd.to_datetime(maxTime)
+    #maxTime = maxTime.strftime("%m/%m/%s")
+    print(minTime)
+    print(maxTime)
+
+    minDate = min(df['Date'])
+    minDate = pd.to_datetime(minDate)
+    minDate = minDate.strftime("%m/%d/%Y")
+    maxDate = max(df['Date'])
+    maxDate = pd.to_datetime(maxDate)
+    maxDate = maxDate.strftime("%m/%d/%Y")
+    print(minDate)
+    print(maxDate)
 
     for col in df.columns:
         colNames.append(col)
@@ -78,6 +96,14 @@ def create_dashboard(server):
     dash_app.layout = html.Div(children=[
 
 #filter selections
+        #html.Div(id='dateSelection', children=[
+         #   dcc.DatePickerRange(
+          #      id='dateRange',
+           #     min_date_allowed=date()
+            #    max_date_allowed=
+            #)
+        #], style={'display':'block'}),
+
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
                 id='routes',
