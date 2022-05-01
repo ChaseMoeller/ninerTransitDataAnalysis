@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import dash
-from datetime import date
+from datetime import date, datetime
 
 from dash import dcc, html, Input, Output, dash_table
 
@@ -32,9 +32,10 @@ def create_dashboard(server):
     busNumbers = []
     driverIDs=[]
     colNames = []
+    
     minTime = min(df['Time'])
     #minTime = pd.to_datetime(minTime)
-    #minTime = minDate.strftime("%H/%m/%s")
+    #minTime = minTime.strftime("%H/%m/%s")
     maxTime = max(df['Time'])
     #maxTime = pd.to_datetime(maxTime)
     #maxTime = maxTime.strftime("%m/%m/%s")
@@ -43,12 +44,12 @@ def create_dashboard(server):
 
     minDate = min(df['Date'])
     minDate = pd.to_datetime(minDate)
-    minDate = minDate.strftime("%m/%d/%Y")
+   # minDate = datetime.strptime(minDate, "%m/%d/%Y")
     maxDate = max(df['Date'])
     maxDate = pd.to_datetime(maxDate)
-    maxDate = maxDate.strftime("%m/%d/%Y")
-    print(minDate)
-    print(maxDate)
+   # maxDate = datetime.strptime(maxDate, "%m/%d/%Y")
+    print(str(minDate.date().month) +"/"+str(minDate.date().day)+"/"+str(minDate.date().year))
+    print(maxDate.date())
 
     for col in df.columns:
         colNames.append(col)
@@ -96,13 +97,7 @@ def create_dashboard(server):
     dash_app.layout = html.Div(children=[
 
 #filter selections
-        #html.Div(id='dateSelection', children=[
-         #   dcc.DatePickerRange(
-          #      id='dateRange',
-           #     min_date_allowed=date()
-            #    max_date_allowed=
-            #)
-        #], style={'display':'block'}),
+        
 
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
@@ -136,7 +131,23 @@ def create_dashboard(server):
             )
         ], style={'display':'block'}),
 
-    #Dropdowns for graph, filter, and x/y
+
+        
+        html.Div([
+            html.Label("Start Time: "),
+            dcc.Input(
+                id='start-time',
+                type= 'datetime-local',
+                value=minDate
+            ),
+            html.Label("End Time: "),
+            dcc.Input(
+                id='end-time',
+                type= 'datetime-local',
+                value=maxDate
+            )
+        ]),
+            #Dropdowns for graph, filter, and x/y
         html.Div([
             dcc.Dropdown(
                 id='graph-type',
