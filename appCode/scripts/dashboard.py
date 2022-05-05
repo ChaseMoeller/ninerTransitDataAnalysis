@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -14,10 +15,19 @@ def create_dashboard(server):
         server=server,
         routes_pathname_prefix='/dashapp/',
     )
-
+    
+    #Data Upload
+    folders = ["niner-transit-data", "spreadsheets"]
+    controls = [
+        dcc.Dropdown(
+            id="dropdown",
+            options=[{"label": x, "value": x} for x in folders],
+            value=folders[0],
+        )
+    ]
 
     #upload file
-    df = pd.read_excel('appCode/niner-transit-data/Copy of Test Log #2.xlsx')
+    df = pd.read_excel('niner-transit-data/Copy of Test Log #2.xlsx')
 
     #declare arrays
     nanRoute = 'Route NaN' 
@@ -72,6 +82,9 @@ def create_dashboard(server):
     #html layout
     dash_app.layout = html.Div(children=[
 
+    #Data Upload
+    html.H1("File Browser"), html.Div(controls), html.Div(id="folder-files"),
+
 #filter selections
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
@@ -125,6 +138,14 @@ def create_dashboard(server):
         ])
     ])
     
+    @dash_app.callback(Output("folder-files", "children"), Input("dropdown", "value"))
+    def list_all_files(folder_name):
+        # This is relative, but you should be able
+        # able to provide the absolute path too
+        file_names = os.listdir(folder_name)
+        file_list = html.Ul([html.Li(file) for file in file_names])
+        return file_list
+
     @dash_app.callback(
         Output(component_id='graph-1', component_property='figure'),
         Input(component_id='filter-dd', component_property='value'),
@@ -133,6 +154,7 @@ def create_dashboard(server):
         Input(component_id='buses', component_property='value'),
         Input(component_id='drivers', component_property='value'),
     )
+
     #The parameters below correspond to the Input's above respectively
     def updateGraph(filter, route, stop, bus, driver):
         dfNaN = pd.DataFrame()
@@ -205,6 +227,6 @@ def create_dashboard(server):
         elif(filter=='Driver ID'):
             return {'display':'none'}, {'display':'none'}, {'display':'none'}, {'display':'block'}
         return {'display':'block'}, {'display':'none'}, {'display':'none'}, {'display':'none'} #show route selection if anything fails
-    
+
     return dash_app.server
 
