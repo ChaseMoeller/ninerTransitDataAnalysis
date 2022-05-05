@@ -1,5 +1,3 @@
-from lib2to3.pgen2 import driver
-from types import NoneType
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -69,7 +67,7 @@ def create_dashboard(server):
 
 
     #load default graph
-    fig = px.line_geo(df, lat="Latitude", lon="Longitude")
+    fig = px.bar(df, x="Latitude", y="Longitude")
 
     #tests
     #print(stopNames)
@@ -115,12 +113,12 @@ def create_dashboard(server):
         
             #Dropdowns for graph, filter, and x/y
         html.Div([
-            dcc.Dropdown(
-                id='graph-type',
-                options = [{'label': i, 'value': i} for i in ['Map', 'Bar', 'Line', 'Pie']],
-                value='Map',
-                placeholder='Choose Graph Type'
-            ),
+            # dcc.Dropdown(
+            #     id='graph-type',
+            #     options = [{'label': i, 'value': i} for i in ['Map', 'Bar', 'Line', 'Pie']],
+            #     value='Map',
+            #     placeholder='Choose Graph Type'
+            # ),
             dcc.Dropdown(
                 id='filter-dd',
                 options=filterOptions,
@@ -151,7 +149,7 @@ def create_dashboard(server):
     
     @dash_app.callback(
         Output(component_id='graph-1', component_property='figure'),
-        Input(component_id='graph-type', component_property='value'),
+        #Input(component_id='graph-type', component_property='value'),
         Input(component_id='filter-dd', component_property='value'),
         Input(component_id='routes', component_property='value'),
         Input(component_id='stops', component_property='value'),
@@ -161,7 +159,7 @@ def create_dashboard(server):
         Input(component_id='y-axis-dd', component_property='value')
     )
     #The parameters below correspond to the Input's above respectively
-    def updateGraph(graph, filter, route, stop, bus, driver, xaxis, yaxis):
+    def updateGraph(filter, route, stop, bus, driver, xaxis, yaxis):
         dfNaN = pd.DataFrame()
         col1 = 'Count'
         col2 = 'Parameters'
@@ -215,14 +213,14 @@ def create_dashboard(server):
                 dfNaN[col2] = colNames
                 print(dfNaN)
 
-        if(graph == 'Bar'):
+        #if(graph == 'Bar'):
             fig = px.bar(dfNaN, x=col2, y=col1)
-        elif(graph == 'Line'):
-            fig = px.line(dff, x=xaxis, y=yaxis)
-        elif(graph == 'Map'):
-            fig = px.line_geo(dff, lat=xaxis, lon=yaxis)
-        elif(graph == 'Pie'):
-            fig = px.pie(values=[xaxis, yaxis], names=[xaxis, yaxis])
+        # elif(graph == 'Line'):
+        #     fig = px.line(dff, x=xaxis, y=yaxis)
+        # elif(graph == 'Map'):
+        #     fig = px.line_geo(dff, lat=xaxis, lon=yaxis)
+        # elif(graph == 'Pie'):
+        #     fig = px.pie(values=[xaxis, yaxis], names=[xaxis, yaxis])
         return fig
 
     @dash_app.callback(
