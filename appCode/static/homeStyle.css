@@ -66,12 +66,6 @@ hr {
   float: left;
 }
 
-.navbar li.current a {
-  background-color: #a49665;
-  color: black;
-  font-weight: bold;
-}
-
 .navbar ul.secondary-nav li {
   float: right;
 }

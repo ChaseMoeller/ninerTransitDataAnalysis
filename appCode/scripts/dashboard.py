@@ -69,21 +69,16 @@ def create_dashboard(server):
     #load default graph
     fig = px.bar(df, x="Latitude", y="Longitude")
 
-    #tests
-    #print(stopNames)
-    #print(filterOptions)
-
     #html layout
     dash_app.layout = html.Div(children=[
 
 #filter selections
-        
-
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
                 id='routes',
                 options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green', nanRoute]],
-                value= 'Silver'
+                value='Silver'
+
             )
         ], style={'display':'block'}),
     
@@ -91,7 +86,8 @@ def create_dashboard(server):
             dcc.RadioItems(
                 id='stops',
                 options = stopNames,
-                value= stopNames[0]
+                value=stopNames[0]
+
             )
         ], style={'display':'block'}),
 
@@ -99,7 +95,8 @@ def create_dashboard(server):
             dcc.RadioItems(
                 id='buses',
                 options = busNumbers,
-                value= busNumbers[0]
+                value = busNumbers[0]
+
             )
         ], style={'display':'block'}),
 
@@ -111,32 +108,13 @@ def create_dashboard(server):
             )
         ], style={'display':'block'}),
         
-            #Dropdowns for graph, filter, and x/y
+    #Dropdowns for graph, filter, and x/y
         html.Div([
-            # dcc.Dropdown(
-            #     id='graph-type',
-            #     options = [{'label': i, 'value': i} for i in ['Map', 'Bar', 'Line', 'Pie']],
-            #     value='Map',
-            #     placeholder='Choose Graph Type'
-            # ),
             dcc.Dropdown(
                 id='filter-dd',
                 options=filterOptions,
-                value = 'Route',
                 placeholder='Choose Filter'
             ),
-            dcc.Dropdown(
-                id='x-axis-dd',
-                options=sortOptions,
-                value = 'Latitude',
-                placeholder='Choose X Variable'
-            ),
-            dcc.Dropdown(
-                id='y-axis-dd',
-                options=sortOptions,
-                value = 'Longitude',
-                placeholder='Choose Y Variable'
-            )
         ]),
     #graph
         html.Div([
@@ -149,17 +127,14 @@ def create_dashboard(server):
     
     @dash_app.callback(
         Output(component_id='graph-1', component_property='figure'),
-        #Input(component_id='graph-type', component_property='value'),
         Input(component_id='filter-dd', component_property='value'),
         Input(component_id='routes', component_property='value'),
         Input(component_id='stops', component_property='value'),
         Input(component_id='buses', component_property='value'),
         Input(component_id='drivers', component_property='value'),
-        Input(component_id='x-axis-dd', component_property='value'),
-        Input(component_id='y-axis-dd', component_property='value')
     )
     #The parameters below correspond to the Input's above respectively
-    def updateGraph(filter, route, stop, bus, driver, xaxis, yaxis):
+    def updateGraph(filter, route, stop, bus, driver):
         dfNaN = pd.DataFrame()
         col1 = 'Count'
         col2 = 'Parameters'
@@ -174,53 +149,43 @@ def create_dashboard(server):
                 dff = df[df[filter] == route]
             else:
                 dff = df[df[filter].isna()]
-            if xaxis != None and yaxis != None:
-                temp = dff.isna().sum(axis=0).to_numpy()
-                dfNaN[col1] = temp.tolist()
-                dfNaN[col2] = colNames
-                print(dfNaN)
+            temp = dff.isna().sum(axis=0).to_numpy()
+            dfNaN[col1] = temp.tolist()
+            dfNaN[col2] = colNames
+            print(dfNaN)
 
         elif(filter == 'Stop'):
             if stop != nanStop:
                 dff = df[df[filter] == stop]
             else:
                 dff = df[df[filter].isna()]
-            if xaxis != None and yaxis != None:
-                temp = dff.isna().sum(axis=0).to_numpy()
-                dfNaN[col1] = temp.tolist()
-                dfNaN[col2] = colNames
-                print(dfNaN)
+            temp = dff.isna().sum(axis=0).to_numpy()
+            dfNaN[col1] = temp.tolist()
+            dfNaN[col2] = colNames
+            print(dfNaN)
 
         elif(filter == 'Bus'):
             if bus != nanBus:
                 dff = df[df[filter] == bus]
             else:
                 dff = df[df[filter].isna()]
-            if xaxis != None and yaxis != None:
-                temp = dff.isna().sum(axis=0).to_numpy()
-                dfNaN[col1] = temp.tolist()
-                dfNaN[col2] = colNames
-                print(dfNaN)
+            temp = dff.isna().sum(axis=0).to_numpy()
+            dfNaN[col1] = temp.tolist()
+            dfNaN[col2] = colNames
+            print(dfNaN)
 
         elif(filter == 'Driver ID'):
             if driver != nanRoute:
                 dff = df[df[filter] == driver]
             else:
                 dff = df[df[filter].isna()]
-            if xaxis != None and yaxis != None:
-                temp = dff.isna().sum(axis=0).to_numpy()
-                dfNaN[col1] = temp.tolist()
-                dfNaN[col2] = colNames
-                print(dfNaN)
+            temp = dff.isna().sum(axis=0).to_numpy()
+            dfNaN[col1] = temp.tolist()
+            dfNaN[col2] = colNames
+            print(dfNaN)
 
-        #if(graph == 'Bar'):
-            fig = px.bar(dfNaN, x=col2, y=col1)
-        # elif(graph == 'Line'):
-        #     fig = px.line(dff, x=xaxis, y=yaxis)
-        # elif(graph == 'Map'):
-        #     fig = px.line_geo(dff, lat=xaxis, lon=yaxis)
-        # elif(graph == 'Pie'):
-        #     fig = px.pie(values=[xaxis, yaxis], names=[xaxis, yaxis])
+        fig = px.bar(dfNaN, x=col2, y=col1)
+
         return fig
 
     @dash_app.callback(
