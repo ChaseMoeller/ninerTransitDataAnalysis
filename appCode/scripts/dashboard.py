@@ -105,7 +105,7 @@ def create_dashboard(server):
         html.H5('Select specific data you would like:', className='radio-title', style={'font-family':'Arial'}),
 
         html.Div(id='routeSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='routes',
                 options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green', nanRoute]],
                 value='Silver'
@@ -114,7 +114,7 @@ def create_dashboard(server):
         ], style={'display':'block'}),
     
         html.Div(id='stopSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='stops',
                 options = stopNames,
                 value=stopNames[0]
@@ -123,7 +123,7 @@ def create_dashboard(server):
         ], style={'display':'block'}),
 
         html.Div(id='busSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='buses',
                 options = busNumbers,
                 value = busNumbers[0]
@@ -132,7 +132,7 @@ def create_dashboard(server):
         ], style={'display':'block'}),
 
         html.Div(id='driverSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='drivers',
                 options = driverIDs,
                 value= driverIDs[0]
