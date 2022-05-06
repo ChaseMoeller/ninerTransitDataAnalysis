@@ -87,12 +87,9 @@ def create_dashboard(server):
     #Data Upload
 
     html.Div(id="folder-files", children=[
-        html.H1("Visualization Page", className='title', style={'font-family':'Arial', 'text-align':'center'}),
-        html.H4('Files Available:', className='list-title', style={'font-family':'Arial'}),
-        html.Div(id="folder-files", className='files'),
-        html.H2('Select your file:', className='selector-title', style={'font-family':'Arial'}),
-        html.Div(controls), 
-    
+        html.H2("Visualization Page", className='title', style={'font-family':'Arial', 'text-align':'center'}),
+        html.H3('Select your file:', className='selector-title', style={'font-family':'Arial'}),
+  
         dcc.Dropdown(
             id="dropdown",
             options=[{"label": x, "value": x} for x in folders],
@@ -112,7 +109,7 @@ def create_dashboard(server):
             ),
         ]),
 
-        html.H5('Select specific data you would like:', className='radio-title', style={'font-family':'Arial'}),
+        html.H4('Select specific data you would like:', className='radio-title', style={'font-family':'Arial'}),
 
         html.Div(id='routeSelections', children=[
             dcc.Dropdown(
@@ -184,7 +181,7 @@ def create_dashboard(server):
         print('instance/niner-transit-data/' + excel)
         df = pd.read_excel('instance/niner-transit-data/' + excel)
         dfNaN = pd.DataFrame()
-        col1 = 'Count'
+        col1 = 'Null Count'
         col2 = 'Parameters'
         dfNaN[col1] = ""
         dfNaN[col2] = ""
