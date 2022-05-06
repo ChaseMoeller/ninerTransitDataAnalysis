@@ -27,11 +27,8 @@ def create_dashboard(server):
     ]
 
     #upload file
-<<<<<<< HEAD:scripts/dashboard.py
-    df = pd.read_excel('niner-transit-data/Copy of Test Log #2.xlsx')
-=======
+
     df = pd.read_excel('instance/niner-transit-data/Copy of Test Log #2.xlsx')
->>>>>>> develop:appCode/scripts/dashboard.py
 
     #declare arrays
     nanRoute = 'Route NaN' 
