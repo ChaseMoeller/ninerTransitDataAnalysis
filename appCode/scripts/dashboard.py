@@ -83,14 +83,15 @@ def create_dashboard(server):
     dash_app.layout = html.Div(children=[
 
     #Data Upload
-    html.H1("Visualization Page"),
-    html.H2('Select your file'),
-    html.Div(controls), 
-    html.H4('Files Available'),
+    html.H1("Visualization Page", style={'font-family':'Arial'}),
+    html.H4('Files Available', style={'font-family':'Arial'}),
     html.Div(id="folder-files"),
+    html.H2('Select your file (Currently just selects the folder where the files are)', style={'font-family':'Arial'}),
+    html.Div(controls), 
+    
 
 #filter selections
-        html.H4('Select the route you would like to initially filter by'),
+        html.H4('Select the route you would like to initially filter by', style={'font-family':'Arial'}),
         
         #Dropdowns for graph, filter, and x/y
         html.Div([
@@ -100,7 +101,9 @@ def create_dashboard(server):
                 placeholder='Choose Filter'
             ),
         ]),
-        
+
+        html.H5('Select specific filter you would like.', style={'font-family':'Arial'}),
+
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
                 id='routes',
