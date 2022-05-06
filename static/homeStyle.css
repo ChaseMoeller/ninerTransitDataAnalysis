@@ -66,12 +66,6 @@ hr {
   float: left;
 }
 
-.navbar li.current a {
-  background-color: #a49665;
-  color: black;
-  font-weight: bold;
-}
-
 .navbar ul.secondary-nav li {
   float: right;
 }
@@ -157,7 +151,7 @@ section {
   display: inline-block;
   background-color: white;
   width:90%;
-  height:600px;
+  height:1000px;
   margin:5%;
   border-style: solid;
   border-color: #c7b67c;
@@ -165,7 +159,7 @@ section {
 }
 
 #dash-container {
-  width:58%;
+  width:99%;
   height: 100%;
   margin: 1%;
   float:left;

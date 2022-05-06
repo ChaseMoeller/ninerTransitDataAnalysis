@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: driver
+Version: 0.1.0
+Summary: Support for Pytorch programs.
+Home-page: https://github.com/yngtodd/driver
+Author: Todd Young
+Author-email: youngmt1@ornl.gov
+License: BSD license
+Keywords: driver
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Requires-Dist: Click (>=6.0)
+
+======
+Driver
+======
+
+
+.. image:: https://img.shields.io/pypi/v/driver.svg
+        :target: https://pypi.python.org/pypi/driver
+
+.. image:: https://img.shields.io/travis/yngtodd/driver.svg
+        :target: https://travis-ci.org/yngtodd/driver
+
+.. image:: https://readthedocs.org/projects/driver/badge/?version=latest
+        :target: https://driver.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
+
+.. image:: https://pyup.io/repos/github/yngtodd/driver/shield.svg
+     :target: https://pyup.io/repos/github/yngtodd/driver/
+     :alt: Updates
+
+
+
+Support for Pytorch programs.
+
+
+* Free software: BSD license
+* Documentation: https://driver.readthedocs.io.
+
+
+Features
+--------
+
+* TODO
+
+Credits
+-------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+
+=======
+History
+=======
+
+0.1.0 (2019-09-13)
+------------------
+
+* First release on PyPI.
+
+

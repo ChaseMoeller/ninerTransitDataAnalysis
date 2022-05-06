@@ -20,11 +20,12 @@ application = app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///post.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "not secret"
-
+os.makedirs(os.path.join(app.instance_path, 'niner-transit-data'), exist_ok=True)
+       
 db.init_app(app)
 
 with app.app_context():
-    
+
     #setup dash
     from scripts.dashboard import create_dashboard
     app = create_dashboard(app)
@@ -122,9 +123,13 @@ def upload():
 def uploader():
     if request.method == 'POST':
         file = request.files['file']
-        file.save(secure_filename(file.filename))
-        data = pd.read_excel(file)
-        return render_template('data.html', data=data.to_html())
+
+        file.save(os.path.join(app.instance_path, 'niner-transit-data', secure_filename(file.filename)))
+
+        if not session.get('user'):
+            return render_template("visualize.html")
+        else:
+            return render_template("visualize.html", user=session['user'])
 
 #app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
 

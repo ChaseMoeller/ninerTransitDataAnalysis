@@ -9,54 +9,6 @@
     <div id="dash-container">
             <iframe id="dash-graph" src="/dashapp/"></iframe>
     </div>
-    <div id="graph-options-container">
-        <div id="graph-options">
-        <form method="POST" action="/visualize">
-
-            <!--Routes-->
-            <div id="sort-by-route">
-            
-                <h2>Sort By Route:</h2>
-                <input type="radio" name="options" id="gold" value="gold"> Gold </input><br>
-                <input type="radio" name="options" id="green" value="green"> Green </input><br>
-                <input type="radio" name="options" id="silver" value="silver"> Silver </input><br>
-                <input type="submit" type="button" value="Visualize" name="Visualize"/>
-    
-
-            </div>
-        </form>
-  
-        <!--Dropdown Menus-->
-        <div class="dropdown">
-            <button class="dd-button">Graph Type</button>
-            <div class="dropdown-content" id="graph-type">
-                <a href="{{ url_for('visualize') }}/bar">Bar</a>
-                <a href="{{ url_for('visualize') }}/line">Line</a>
-                <a href="{{ url_for('visualize') }}/pie">Pie</a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dd-button">X-Value</button>
-            <div class="dropdown-content" id="x-value">
-                <a href="{{ url_for('visualize') }}/lat">Lat</a>
-                <a href="{{ url_for('visualize') }}/long">Long</a>
-                <a href="{{ url_for('visualize') }}/date">Date</a>
-                <a href="{{ url_for('visualize') }}/stopName">Stop Name</a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dd-button">Y-Value</button>
-            <div class="dropdown-content" id="Y-Value">
-                <a href="{{ url_for('visualize') }}/lat">Lat</a>
-                <a href="{{ url_for('visualize') }}/long">Long</a>
-                <a href="{{ url_for('visualize') }}/date">Date</a>
-                <a href="{{ url_for('visualize') }}/stopName">Stop Name</a>
-            </div>
-        </div>
-    </div>
-    </div>
   <!-- <p> Return Values: {{ item }} {{graph}}</p>-->
 </div>
  {% endblock %}
