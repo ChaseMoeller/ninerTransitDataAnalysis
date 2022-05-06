@@ -5,6 +5,7 @@ body {
   position: relative;
   margin: 0;
   background-image: url(UNCCCampusMap.png);
+  /*for now commenting out background-image: url(UNCCCampusMap.png);*/
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -25,7 +26,17 @@ hr {
   border-bottom: 3px solid #a49665;
 }
 
+
 /*nav bar style*/
+
+.username {
+  display: block;
+  color: #a49665;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
 .navbar {
   overflow: hidden;
   background-color: #0c7544;
@@ -55,17 +66,54 @@ hr {
   float: left;
 }
 
-.navbar li.current a {
-  background-color: #a49665;
-  color: black;
-  font-weight: bold;
-}
-
 .navbar ul.secondary-nav li {
   float: right;
 }
 
+/* css for flash */
+.flash {
+margin: 0;
+padding: 0;
+width: 100%;
+height: 5%
+}
+.flash-success {
+
+  background: rgba(4, 236, 15, 0.7);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 10px 10px;
+  margin-top: 0px;
+
+}
+
+.flash-error {
+
+  background: rgba(247, 63, 2, 0.7);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 10px 10px;
+  margin-top: 0px;
+
+}
+
 /*login section style*/
+.login-section {
+
+  display: inline-block;
+  width: 40%;
+  height: 40%;
+  margin-top:5%;
+  margin-left: 30%;
+  margin-right: 30%;
+  background-color: white;
+  border-style: solid;
+  border-color: #c7b67c;
+
+
+}
 section {
   padding: 30px;
 }
@@ -85,4 +133,103 @@ section {
   color: white;
   padding: 8px;
 }
+/*About page CSS*/
+#about-background {
+  display: inline-block;
+  background-color: white;
+  width:90%;
+  height:90%;
+  margin:5%;
+  margin-left: 4%;
+  padding:1%;
+  border-style: solid;
+  border-color: #c7b67c;
+}
+/*Visualization page CSS */
+#visualize-background {
+
+  display: inline-block;
+  background-color: white;
+  width:90%;
+  height:1000px;
+  margin:5%;
+  border-style: solid;
+  border-color: #c7b67c;
+
+}
+
+#dash-container {
+  width:99%;
+  height: 100%;
+  margin: 1%;
+  float:left;
+}
+#dash-graph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  box-sizing: border-box;
+}
+#graph-options-container {
+  width:40%;
+  float: right;
+}
+#graph-options {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sort-by-route {
+
+  position: relative;
+  display:inline-block;
+  margin:10px;
+  
+}
+
+.dropdown {
+  
+  position: relative;
+  display: inline-block;
+  margin:10px;
+
+}
+
+.dd-button {
+
+  background-color: #f1f1f1;
+  color: black;
+  min-width: 160px;
+  font-size: 16px;
+
+}
+
+.dropdown-content {
+
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+
+}
+
+.dropdown-content a {
+
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+
 /*# sourceMappingURL=homeStyle.css.map */

@@ -1,48 +1,14 @@
-<!-- Page: About Page -->
-<!-- Author: Jared Beightol -->
+{% extends 'base.html' %}
+{% block title %}
+<title>About Page</title>
+{% endblock %}
 
-<html lang="en">
-    <head>        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home Page</title>
-        <meta name="description" content="One of many pages">
-        <meta name="keyword" content="Just a page">
-        <link rel="stylesheet" href="{{ url_for('static', filename='homeStyle.css') }}">
-    </head>
-        
-    <body>
+{% block content %}
 
-        <div class="header">
-            <a href="home.html"><img src="static/logo.png" height="100" width="300" class="left" alt=""/></a>
-        </div>
-
-        <p>
-            <hr>
-        </p>
-
-        <div class="navbar">
-            <div class="container">
-                <nav>
-                    <ul class="primary-nav">   
-                        <li class="current"><a href="#">About</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Upload</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Visualize</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Export</a></li>
-                        <li><a href="{{ url_for('static', filename='base.html') }}">Admin</a></li>
-                        <li><a href="{{ url_for('static', filename='about.html') }}">About</a></li>
-                    </ul>
-                    <ul class="secondary-nav">   
-                        <li><a href="{{ url_for('static', filename='base.html') }}">How To Access</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-
-<div class="main">
-    <h1 style="font-size:45px;">About</h1>
+<div id="about-background" class="main">
+    <h1 style="font-size:45px; text-decoration: underline;">About</h1>
     <p1 style="font-size:30px;">
-        <img style="float:right; padding-left: .2%;" src="UNCC_logo.png" width="40%" height="60%">
+        <img style="float:right; padding-left: .2%;" src="{{ url_for('static', filename='UNCC_logo.png')  }}" width="40%" height="60%">
         This application was made by Network Data Solutions, a student group at UNCC. 
         The people who worked on this application are Casey Oates, Cameron Pacileo, Chase Moeller, Jonathan Martinez, Zack Gerald, and Jared Beightol. 
         This application was created as part of a capstone assignment. This project was developed using Python in a Cloud hosting environment.
@@ -54,10 +20,4 @@
     </p1>
 
 </div>
-
-<hr>
-
-
-
-</body>
-</html>
+{% endblock %}

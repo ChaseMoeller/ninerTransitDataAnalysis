@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block title %}
+<title>Visualize Page</title>
+{% endblock %}
+{% block content %}
+
+<div id="visualize-background">
+    <div id="dash-container">
+            <iframe id="dash-graph" src="/dashapp/"></iframe>
+    </div>
+  <!-- <p> Return Values: {{ item }} {{graph}}</p>-->
+</div>
+ {% endblock %}

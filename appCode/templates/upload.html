@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>About Page</title>
+{% endblock %}
+{% block content %}
+
+<section class="login-section">
+    <div class="container">
+        <div class="formwrapper">
+            <h2 class="title">Upload</h2>
+            <form action="uploader" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" name="" value="Submit">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
