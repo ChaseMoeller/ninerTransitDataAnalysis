@@ -17,7 +17,7 @@ def create_dashboard(server):
     )
     
     #Data Upload
-    folders = ["niner-transit-data", "spreadsheets"]
+    folders = os.listdir('instance/niner-transit-data')
     controls = [
         dcc.Dropdown(
             id="dropdown",
@@ -27,7 +27,7 @@ def create_dashboard(server):
     ]
 
     #upload file
-    df = pd.read_excel('niner-transit-data/Copy of Test Log #2.xlsx')
+    df = pd.read_excel('instance/niner-transit-data/Copy of Test Log #2.xlsx')
 
     #declare arrays
     nanRoute = 'Route NaN' 
@@ -82,9 +82,17 @@ def create_dashboard(server):
     #html layout
     dash_app.layout = html.Div(children=[
 
+        #refresh button
+   
     #Data Upload
-    html.H1("File Browser"), html.Div(controls), html.Div(id="folder-files"),
+    html.Div(id="folder-files", children=[
+        dcc.Dropdown(
+            id="dropdown",
+            options=[{"label": x, "value": x} for x in folders],
+            value=folders[3],
 
+        )
+    ]),
 #filter selections
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
@@ -148,15 +156,20 @@ def create_dashboard(server):
 
     @dash_app.callback(
         Output(component_id='graph-1', component_property='figure'),
+        Output(component_id='dropdown', component_property='options'),
+        Input(component_id='dropdown', component_property='value'),
         Input(component_id='filter-dd', component_property='value'),
         Input(component_id='routes', component_property='value'),
         Input(component_id='stops', component_property='value'),
         Input(component_id='buses', component_property='value'),
-        Input(component_id='drivers', component_property='value'),
+        Input(component_id='drivers', component_property='value')
     )
 
     #The parameters below correspond to the Input's above respectively
-    def updateGraph(filter, route, stop, bus, driver):
+    def updateGraph(excel, filter, route, stop, bus, driver):
+        folders = os.listdir('instance/niner-transit-data')
+        print('instance/niner-transit-data/' + excel)
+        df = pd.read_excel('instance/niner-transit-data/' + excel)
         dfNaN = pd.DataFrame()
         col1 = 'Count'
         col2 = 'Parameters'
@@ -165,7 +178,12 @@ def create_dashboard(server):
         temp = []
         print(df)
         dff = df
-        
+
+        colNames.clear()
+
+        for col in df.columns:
+            colNames.append(col)
+
         if(filter == 'Route'):
             if route != nanRoute:
                 dff = df[df[filter] == route]
@@ -208,7 +226,7 @@ def create_dashboard(server):
 
         fig = px.bar(dfNaN, x=col2, y=col1)
 
-        return fig
+        return fig, [{"label": x, "value": x} for x in folders]
 
     @dash_app.callback(
         Output(component_id='routeSelections', component_property='style'),
