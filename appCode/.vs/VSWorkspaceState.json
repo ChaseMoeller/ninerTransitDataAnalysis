@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\scripts",
+    "\\static",
+    "\\templates"
   ],
-  "SelectedNode": "\\main.py",
+  "SelectedNode": "\\application.py",
   "PreviewInSolutionExplorer": false
 }
