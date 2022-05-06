@@ -83,15 +83,15 @@ def create_dashboard(server):
     dash_app.layout = html.Div(children=[
 
     #Data Upload
-    html.H1("Visualization Page", style={'font-family':'Arial', 'text-align':'center'}),
-    html.H4('Files Available:', style={'font-family':'Arial'}),
-    html.Div(id="folder-files"),
-    html.H2('Select your file:', style={'font-family':'Arial'}),
+    html.H1("Visualization Page", className='title', style={'font-family':'Arial', 'text-align':'center'}),
+    html.H4('Files Available:', className='list-title', style={'font-family':'Arial'}),
+    html.Div(id="folder-files", className='files'),
+    html.H2('Select your file:', className='selector-title', style={'font-family':'Arial'}),
     html.Div(controls), 
     
 
 #filter selections
-        html.H4('Select the route you would like to initially filter by:', style={'font-family':'Arial'}),
+        html.H4('Select the Column Type you would like to initially filter by:', className='selector-title', style={'font-family':'Arial'}),
         
         #Dropdowns for graph, filter, and x/y
         html.Div([
@@ -102,7 +102,7 @@ def create_dashboard(server):
             ),
         ]),
 
-        html.H5('Select specific filter you would like:', style={'font-family':'Arial'}),
+        html.H5('Select specific data you would like:', className='radio-title', style={'font-family':'Arial'}),
 
         html.Div(id='routeSelections', children=[
             dcc.RadioItems(
