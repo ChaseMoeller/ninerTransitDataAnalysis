@@ -85,7 +85,14 @@ def create_dashboard(server):
         #refresh button
    
     #Data Upload
+
     html.Div(id="folder-files", children=[
+        html.H1("Visualization Page", className='title', style={'font-family':'Arial', 'text-align':'center'}),
+        html.H4('Files Available:', className='list-title', style={'font-family':'Arial'}),
+        html.Div(id="folder-files", className='files'),
+        html.H2('Select your file:', className='selector-title', style={'font-family':'Arial'}),
+        html.Div(controls), 
+    
         dcc.Dropdown(
             id="dropdown",
             options=[{"label": x, "value": x} for x in folders],
@@ -94,8 +101,21 @@ def create_dashboard(server):
         )
     ]),
 #filter selections
+        html.H4('Select the Column Type you would like to initially filter by:', className='selector-title', style={'font-family':'Arial'}),
+        
+        #Dropdowns for graph, filter, and x/y
+        html.Div([
+            dcc.Dropdown(
+                id='filter-dd',
+                options=filterOptions,
+                placeholder='Choose Filter'
+            ),
+        ]),
+
+        html.H5('Select specific data you would like:', className='radio-title', style={'font-family':'Arial'}),
+
         html.Div(id='routeSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='routes',
                 options = [{'label': i, 'value': i} for i in ['Silver', 'Gold', 'Green', nanRoute]],
                 value='Silver'
@@ -104,7 +124,7 @@ def create_dashboard(server):
         ], style={'display':'block'}),
     
         html.Div(id='stopSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='stops',
                 options = stopNames,
                 value=stopNames[0]
@@ -113,7 +133,7 @@ def create_dashboard(server):
         ], style={'display':'block'}),
 
         html.Div(id='busSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='buses',
                 options = busNumbers,
                 value = busNumbers[0]
@@ -122,21 +142,14 @@ def create_dashboard(server):
         ], style={'display':'block'}),
 
         html.Div(id='driverSelections', children=[
-            dcc.RadioItems(
+            dcc.Dropdown(
                 id='drivers',
                 options = driverIDs,
                 value= driverIDs[0]
             )
         ], style={'display':'block'}),
         
-    #Dropdowns for graph, filter, and x/y
-        html.Div([
-            dcc.Dropdown(
-                id='filter-dd',
-                options=filterOptions,
-                placeholder='Choose Filter'
-            ),
-        ]),
+    
     #graph
         html.Div([
             dcc.Graph(
